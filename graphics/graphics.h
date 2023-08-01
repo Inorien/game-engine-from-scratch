@@ -20,7 +20,7 @@ public:
 	//bool configure(GLFWwindow* const window);
 
 	//call this every frame
-	void render() const noexcept;
+	void render(double dt) const noexcept;
 
 	//call this every frame? seems really bad
 	int checkInput(unsigned key) const noexcept {

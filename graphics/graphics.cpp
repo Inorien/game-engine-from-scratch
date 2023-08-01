@@ -51,8 +51,7 @@ Graphics::~Graphics() {
 	glfwTerminate();
 }
 
-
-void Graphics::render() const noexcept {
+void Graphics::render(const double dt) const noexcept {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(programID);
