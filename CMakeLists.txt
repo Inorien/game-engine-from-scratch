@@ -1,7 +1,4 @@
-﻿# CMakeList.txt : 最上位の CMake プロジェクト ファイル。グローバル構成を行います
-# また、サブプロジェクトをここに含めます。
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.10)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -11,5 +8,27 @@ endif()
 
 project ("openglstudy")
 
-# サブプロジェクトを含めます。
+#this gets us OPENGL_LIBRARY
+find_package(OpenGL REQUIRED)
+
+set(thirdparty ${CMAKE_SOURCE_DIR}/thirdparty)
+
+include_directories(
+	${thirdparty}/glew-2.1.0/include/
+	${thirdparty}/glfw-3.3.8.bin.WIN64/include/
+	${thirdparty}/glm-0.9.9.8/
+)
+
+link_directories(
+	${thirdparty}/glew-2.1.0/lib/Release/x64
+	${thirdparty}/glfw-3.3.8.bin.WIN64/lib-vc2022
+)
+
+link_libraries(
+	${OPENGL_LIBRARY}
+	glfw3
+	glew32
+)
+
 add_subdirectory ("openglstudy")
+add_subdirectory ("graphics")

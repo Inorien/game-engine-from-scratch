@@ -1,12 +1,22 @@
-﻿// openglstudy.cpp : アプリケーションのエントリ ポイントを定義します。
-//
-
-#include "openglstudy.h"
-
-using namespace std;
+﻿#include <iostream>
+#include "engine.h"
 
 int main()
 {
-	cout << "Hello CMake." << endl;
-	return 0;
+    Engine engine{};
+
+    std::cout << "Starting up..." << std::endl;
+    try {
+        engine.start();
+    } catch (const std::exception& e) {
+        std::cerr << "Exception caught during engine startup: " << e.what() << std::endl;
+        return -1;
+    }
+
+	engine.run();
+
+    std::cout << "Cleaning up..." << std::endl;
+    engine.shutdown();
+
+    return 0;
 }
