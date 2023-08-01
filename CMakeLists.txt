@@ -32,3 +32,8 @@ link_libraries(
 
 add_subdirectory ("openglstudy")
 add_subdirectory ("graphics")
+
+configure_file(
+	${CMAKE_SOURCE_DIR}/thirdparty/glew-2.1.0/bin/Release/x64/glew32.dll
+	${CMAKE_BINARY_DIR}/out/glew32.dll
+	COPYONLY)
