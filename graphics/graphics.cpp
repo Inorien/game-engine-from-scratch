@@ -27,22 +27,27 @@ Graphics::Graphics() {
 		throw std::exception("Failed to initialise GLEW");
 	}
 
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
 
-	constexpr GLfloat vertexBufferData[] = {
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 0.0f,  1.0f, 0.0f,
-	};
+	programID = loadShaders("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl");
+
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBufferData), vertexBufferData, GL_STATIC_DRAW);
-
-	programID = loadShaders("vertexshader.glsl", "fragmentshader.glsl");
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		vertexBufferData.size() * sizeof(GLfloat),
+		vertexBufferData.data(),
+		GL_STATIC_DRAW);
 }
 
 Graphics::~Graphics() {
+	glDeleteBuffers(1, &vertexBufferID);
+	glDeleteVertexArrays(1, &vertexArrayID);
+	glDeleteProgram(programID);
+
 	glfwTerminate();
 }
 
@@ -63,10 +68,11 @@ void Graphics::render() const noexcept {
 		(void*)0
 	);
 	
-	glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle  
+
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(0);
-	
+
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 }

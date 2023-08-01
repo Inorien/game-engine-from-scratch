@@ -6,9 +6,11 @@ void Engine::start() {
 }
 
 
+
 void Engine::run() {
 	while (!shouldExit) {
-		if (graphics.checkInput(GLFW_KEY_ESCAPE)) {
+		if (graphics.checkInput(GLFW_KEY_ESCAPE)
+		||  graphics.shouldClose()) { //seems like a bad function to have here
 			shouldExit = true;
 		}
 		graphics.render();
@@ -18,6 +20,3 @@ void Engine::run() {
 void Engine::shutdown() noexcept {
 	
 }
-
-
-

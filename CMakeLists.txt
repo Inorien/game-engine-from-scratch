@@ -37,3 +37,15 @@ configure_file(
 	${CMAKE_SOURCE_DIR}/thirdparty/glew-2.1.0/bin/Release/x64/glew32.dll
 	${CMAKE_BINARY_DIR}/out/glew32.dll
 	COPYONLY)
+
+configure_file(
+	${CMAKE_SOURCE_DIR}/graphics/shaders/fragmentshader.glsl
+	${CMAKE_BINARY_DIR}/out/shaders/fragmentshader.glsl
+	COPYONLY
+)
+
+configure_file(
+	${CMAKE_SOURCE_DIR}/graphics/shaders/vertexshader.glsl
+	${CMAKE_BINARY_DIR}/out/shaders/vertexshader.glsl
+	COPYONLY
+)

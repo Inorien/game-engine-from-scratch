@@ -7,7 +7,7 @@
 #include <sstream>
 #include <vector>
 
-GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePath) {
+inline GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePath) {
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 

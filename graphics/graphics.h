@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <vector>
+
 //own opengl
 class Graphics {
 public:
@@ -26,6 +28,10 @@ public:
 		
 	}
 
+	bool shouldClose() const noexcept {
+		return glfwWindowShouldClose(window);
+	}
+
 private:
 	GLFWwindow* window {nullptr};
 	GLuint vertexArrayID {0};
@@ -33,4 +39,10 @@ private:
 	//GLuint colourBufferID;
 
 	GLuint programID {0};
+
+	std::vector<GLfloat> vertexBufferData {
+		-1.0f, -1.0f, 0.0f,
+		 1.0f, -1.0f, 0.0f,
+		 0.0f,  1.0f, 0.0f
+	};
 };

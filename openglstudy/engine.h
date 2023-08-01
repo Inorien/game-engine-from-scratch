@@ -1,8 +1,7 @@
 #pragma once
 //todo move these deeper in
 #include "../graphics/graphics.h" //todo and make this a library
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+
 
 class Engine {
 public:
