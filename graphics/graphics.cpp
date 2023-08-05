@@ -60,14 +60,15 @@ Graphics::~Graphics() {
 
 void Graphics::render() const noexcept {
 
-	camera->update();
+	//camera->update();
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(programID);
 
-	const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
-
+	//const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
+	const auto mvp{ glm::identity<glm::mat4>() };
+	
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
 
 	glEnableVertexAttribArray(0);

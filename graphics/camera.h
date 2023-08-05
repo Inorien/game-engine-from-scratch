@@ -20,8 +20,6 @@ public:
 
 	Camera(GLFWwindow*& window, float& dt);
 
-	
-
 	const auto& getProjection() const { return projection; }
 
 	const auto& getView() const { return view; }
