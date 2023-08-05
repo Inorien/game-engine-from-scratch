@@ -7,7 +7,6 @@ Camera::Camera(GLFWwindow*& const window, float& dt) :
 	window(window) {
 }
 
-
 void Camera::update() noexcept {
 
 	//in case window size changed

@@ -1,11 +1,22 @@
 #include "graphics.h"
 #include "shader.h"
+#include "texture.h"
 #include <exception>
 #include "../control/callbackControl.h"
 
-Graphics::Graphics(float& dt) :
+Graphics::Graphics(float& dt) noexcept :
 	camera(std::make_unique<Camera>(window, dt))
-{
+{}
+
+Graphics::~Graphics() {
+	glDeleteBuffers(1, &vertexBufferID);
+	glDeleteVertexArrays(1, &vertexArrayID);
+	glDeleteProgram(programID);
+
+	glfwTerminate();
+}
+
+void Graphics::initialise() {
 	glewExperimental = true;
 	if (!glfwInit()) {
 		throw std::exception("Failed to initialise GLFW");
@@ -47,16 +58,20 @@ Graphics::Graphics(float& dt) :
 		vertexBufferData.data(),
 		GL_STATIC_DRAW);
 
+	glGenBuffers(1, &colourBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, colourBufferID);
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		uvData.size() * sizeof(GLfloat),
+		uvData.data(),
+		GL_STATIC_DRAW);
+
+	texture = loadBMP("assets/bitmaps/triangle.bmp");
+	textureID = glGetUniformLocation(programID, "texSampler");
+
 	camera->update();
 }
 
-Graphics::~Graphics() {
-	glDeleteBuffers(1, &vertexBufferID);
-	glDeleteVertexArrays(1, &vertexArrayID);
-	glDeleteProgram(programID);
-
-	glfwTerminate();
-}
 
 void Graphics::render() const noexcept {
 
@@ -71,6 +86,10 @@ void Graphics::render() const noexcept {
 	
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniform1i(textureID, 0);
+
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexAttribPointer(
@@ -79,16 +98,30 @@ void Graphics::render() const noexcept {
 		GL_FLOAT,
 		GL_FALSE,
 		0,
-		(void*)0
+		nullptr
 	);
-	
+
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, colourBufferID);
+	glVertexAttribPointer(
+		1,
+		2,
+		GL_FLOAT,
+		GL_FALSE,
+		0,
+		nullptr
+	);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
 }
 
 void Graphics::registerCallbackControl(CallbackControl* const control) const {

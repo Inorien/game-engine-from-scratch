@@ -12,9 +12,10 @@ class CallbackControl;
 class Graphics {
 public:
 
-	Graphics(float& dt);
+	explicit Graphics(float& dt) noexcept;
 	~Graphics();
 
+	Graphics() = delete;
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 	Graphics(Graphics&&) = delete;
@@ -23,14 +24,10 @@ public:
 	//todo give user config options one day
 	//bool configure(GLFWwindow* const window);
 
-	//call this every frame
-	void render() const noexcept;
+	void initialise();
 
-	//call this every frame? seems really bad
-	int checkInput(const unsigned key) const noexcept {
-		return glfwGetKey(window, key) == GLFW_PRESS;
-		
-	}
+	//call this every frame - ONE DAY, TICK
+	void render() const noexcept;
 
 	bool shouldClose() const noexcept {
 		return glfwWindowShouldClose(window);
@@ -46,8 +43,10 @@ private:
 	GLFWwindow* window {nullptr};
 	GLuint vertexArrayID {0};
 	GLuint vertexBufferID {0};
-	//GLuint colourBufferID;
+	GLuint colourBufferID{0};
 	GLuint matrixID;
+	GLuint texture;
+	GLuint textureID;
 
 	GLuint programID {0};
 
@@ -58,4 +57,11 @@ private:
 		 1.0f, -1.0f, 0.0f,
 		 0.0f,  1.0f, 0.0f
 	};
+
+	std::vector<GLfloat> uvData {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f
+	};
+
 };

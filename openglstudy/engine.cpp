@@ -5,7 +5,7 @@ using namespace std::literals;
 
 
 void Engine::start() {
-	
+	graphics.initialise();
 	//TODO load config
 	graphics.registerCallbackControl(&control);
 	graphics.registerCameraCallbacks(&control);
@@ -14,8 +14,7 @@ void Engine::start() {
 void Engine::run() {
 	auto currentTime{ std::chrono::system_clock::now() };
 	while (!shouldExit) {
-		if (graphics.checkInput(GLFW_KEY_ESCAPE)
-		||  graphics.shouldClose()) { //seems like a bad function to have here
+		if (graphics.shouldClose()) { //seems like a bad function to have here
 			shouldExit = true;
 		}
 		static auto lastTime{ std::chrono::system_clock::now() };

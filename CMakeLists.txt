@@ -49,3 +49,9 @@ configure_file(
 	${CMAKE_BINARY_DIR}/out/shaders/vertexshader.glsl
 	COPYONLY
 )
+
+configure_file(
+	${CMAKE_SOURCE_DIR}/assets/bitmaps/triangle.bmp
+	${CMAKE_BINARY_DIR}/out/assets/bitmaps/triangle.bmp
+	COPYONLY
+)
