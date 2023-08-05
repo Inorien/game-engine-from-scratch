@@ -2,18 +2,21 @@
 
 using namespace glm;
 
-Camera::Camera(GLFWwindow& window) :
+Camera::Camera(GLFWwindow*& const window, float& dt) :
+	KeyboardControllable(dt),
 	window(window) {
-	glfwGetWindowSize(&window, &screenWidth, &screenHeight);
 }
 
 
-void Camera::update(const double dt) noexcept {
+void Camera::update() noexcept {
+
+	//in case window size changed
+	glfwGetWindowSize(window, &screenWidth, &screenHeight);
 
 	double xpos;
 	double ypos;
-	glfwGetCursorPos(&window, &xpos, &ypos);
-	glfwSetCursorPos(&window, screenWidth / 2, screenHeight / 2);
+	glfwGetCursorPos(window, &xpos, &ypos);
+	glfwSetCursorPos(window, screenWidth / 2, screenHeight / 2);
 
 	horizontalAngle += mouseSens * static_cast<float>(screenWidth / 2.0 - xpos);
 	verticalAngle   += mouseSens * static_cast<float>(screenHeight/ 2.0 - ypos);
@@ -38,6 +41,6 @@ void Camera::update(const double dt) noexcept {
 	view = lookAt(
 		position,
 		position + forward,
-		vec3(0,0,1)
+		cross(right, forward)
 	);
 }

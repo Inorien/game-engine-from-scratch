@@ -1,15 +1,14 @@
 #pragma once
 
 //interface class for controllable things (camera, icons, whatever)
-
-struct GLFWwindow;
-
+//this class should probably be called TimeSensitive or something
 struct KeyboardControllable {
-	virtual ~KeyboardControllable() = default;
-	virtual void control_callback(GLFWwindow* window, int key, int scancode, int action, int mods) = 0;
+	//virtual ~KeyboardControllable() = default;
 
-	void setDelta(float dt) noexcept { delta = dt; }
+	explicit KeyboardControllable(float& dt) :
+		delta(dt)
+	{}
 
 protected:
-	float delta{0.0f}; //REAL time since last call
+	float& delta;
 };

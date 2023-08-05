@@ -1,7 +1,7 @@
 #pragma once
 //todo move these deeper in
 #include "../graphics/graphics.h" //todo and make this a library
-
+#include "../control/callbackControl.h"
 
 class Engine {
 public:
@@ -18,7 +18,9 @@ public:
 private:
 	bool shouldExit{false};
 
-	Graphics graphics;
+	float deltaTime{0.0f};
+	Graphics graphics{deltaTime};
+	CallbackControl control;
 
 };
 	
