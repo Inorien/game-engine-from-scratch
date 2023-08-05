@@ -34,19 +34,16 @@ public:
 	void moveBackward() noexcept {
 		std::cout << "backward" << std::endl;
 		position -= delta * forward * speed;
-		update();
 	}
 
 	void moveLeft() noexcept {
 		std::cout << "left" << std::endl;
 		position -= delta * right * speed;
-		update();
 	}
 
 	void moveRight() noexcept {
 		std::cout << "right" << std::endl;
 		position += delta * right * speed;
-		update();
 	}
 
 	void update() noexcept;
@@ -57,7 +54,7 @@ private:
 	glm::vec3 forward{0, 0, 0};
 	glm::vec3 right{0, 1, 0};
 	float speed { 1.0f };
-	float mouseSens { 0.01f };
+	float mouseSens { 0.005f };
 	float fov { 45.0f };
 	float horizontalAngle { glm::pi<float>() };
 	float verticalAngle { 0.0f };

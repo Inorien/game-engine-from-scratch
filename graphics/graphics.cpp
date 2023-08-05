@@ -5,7 +5,7 @@
 
 Graphics::Graphics(float& dt) :
 	camera(std::make_unique<Camera>(window, dt))
-	{
+{
 	glewExperimental = true;
 	if (!glfwInit()) {
 		throw std::exception("Failed to initialise GLFW");
