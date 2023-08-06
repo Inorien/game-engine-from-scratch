@@ -9,16 +9,16 @@ Camera::Camera(GLFWwindow*& const window, float& dt) :
 
 void Camera::update() noexcept {
 
-	//in case window size changed
-	glfwGetWindowSize(window, &screenWidth, &screenHeight);
-
-	double xpos;
-	double ypos;
-	glfwGetCursorPos(window, &xpos, &ypos);
-	glfwSetCursorPos(window, screenWidth / 2, screenHeight / 2);
-
-	horizontalAngle += mouseSens * static_cast<float>(screenWidth / 2.0 - xpos);
-	verticalAngle   += mouseSens * static_cast<float>(screenHeight/ 2.0 - ypos);
+	//no mouse control for now
+	//glfwGetWindowSize(window, &screenWidth, &screenHeight);
+	//
+	//double xpos;
+	//double ypos;
+	//glfwGetCursorPos(window, &xpos, &ypos);
+	//glfwSetCursorPos(window, screenWidth / 2, screenHeight / 2);
+	//
+	//horizontalAngle += mouseSens * static_cast<float>(screenWidth / 2.0 - xpos);
+	//verticalAngle   += mouseSens * static_cast<float>(screenHeight/ 2.0 - ypos);
 
 	forward = vec3{
 		cos(verticalAngle) * sin(horizontalAngle),

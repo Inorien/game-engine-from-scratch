@@ -29,7 +29,7 @@ void Graphics::initialise() {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(800, 600, "openglstudy", nullptr, nullptr);
+	window = glfwCreateWindow(800, 800, "openglstudy", nullptr, nullptr);
 
 	if (!window) {
 		glfwTerminate();
@@ -75,14 +75,14 @@ void Graphics::initialise() {
 
 void Graphics::render() const noexcept {
 
-	//camera->update();
+	camera->update();
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(programID);
 
-	//const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
-	const auto mvp{ glm::identity<glm::mat4>() };
+	const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
+	//const auto mvp{ glm::identity<glm::mat4>() };
 	
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
 

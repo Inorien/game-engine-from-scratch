@@ -8,7 +8,7 @@ void Engine::start() {
 	graphics.initialise();
 	//TODO load config
 	graphics.registerCallbackControl(&control);
-	graphics.registerCameraCallbacks(&control);
+	//graphics.registerCameraCallbacks(&control);
 }
 
 void Engine::run() {
