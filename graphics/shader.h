@@ -1,8 +1,12 @@
 #include <gl/glew.h>
 #include <glfw/glfw3.h>
+#include <glm/glm.hpp>
+
+#include "RenderData.h"
 
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -85,3 +89,39 @@ inline GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePa
 
 	return programID;
 }
+
+
+//YOUR ONE-STOP GATEWAY TO OPENGL HELL
+class Shader {
+public:
+
+	Shader() = delete;
+	~Shader();
+
+	Shader(const std::string& vertex, const std::string& fragment);
+
+	static Shader fromFile(const std::string& vertexPath, const std::string& fragmentPath);
+
+	Shader(const Shader&) = delete;
+	Shader& operator=(const Shader&) = delete;
+	Shader(Shader&&) = default;
+	Shader& operator=(Shader&&) = default;
+
+	//ideally we should never need this
+	//auto getProgramID() const noexcept { return programID; }
+
+	void render(const RenderData& renderData) const;
+
+private:
+	
+
+	GLuint programID{0};
+
+	GLuint vertexAttribID;
+	GLuint uvAttribID;
+	GLuint matrixID;
+	GLuint textureID{0};
+
+	GLuint vertexBuffer;
+	GLuint uvBuffer;
+};

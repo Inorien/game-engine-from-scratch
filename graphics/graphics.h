@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "camera.h"
+#include "shader.h"
 
 #include <vector>
 
@@ -44,24 +45,36 @@ private:
 	GLuint vertexArrayID {0};
 	GLuint vertexBufferID {0};
 	GLuint colourBufferID{0};
-	GLuint matrixID;
 	GLuint texture;
 	GLuint textureID;
 
-	GLuint programID {0};
 
-	std::unique_ptr<Camera> camera;
+	std::unique_ptr<Camera> camera{nullptr};
+	std::unique_ptr<Shader> shader{nullptr};
 
-	std::vector<GLfloat> vertexBufferData {
-		-1.0f, -1.0f, 0.0f,
+	RenderData testData{
+		glm::identity<glm::mat4>(),
+		{-1.0f, -1.0f, 0.0f,
 		 1.0f, -1.0f, 0.0f,
-		-1.0f,  1.0f, 0.0f
+		-1.0f,  1.0f, 0.0f},
+		{0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f},
+		{0, 1, 2},
+		3,
+		0
 	};
 
-	std::vector<GLfloat> uvData {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 1.0f
-	};
+	//std::vector<GLfloat> vertexBufferData {
+	//	-1.0f, -1.0f, 0.0f,
+	//	 1.0f, -1.0f, 0.0f,
+	//	-1.0f,  1.0f, 0.0f
+	//};
+	//
+	//std::vector<GLfloat> uvData {
+	//	0.0f, 0.0f,
+	//	1.0f, 0.0f,
+	//	0.0f, 1.0f
+	//};
 
 };
