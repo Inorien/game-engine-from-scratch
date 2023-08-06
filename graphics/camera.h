@@ -25,22 +25,22 @@ public:
 	const auto& getView() const { return view; }
 
 	void moveForward() noexcept {
-		std::cout << "forward" << std::endl;
+		//std::cout << "forward" << std::endl;
 		position += delta * forward * speed;
 	}
 
 	void moveBackward() noexcept {
-		std::cout << "backward" << std::endl;
+		//std::cout << "backward" << std::endl;
 		position -= delta * forward * speed;
 	}
 
 	void moveLeft() noexcept {
-		std::cout << "left" << std::endl;
+		//std::cout << "left" << std::endl;
 		position -= delta * right * speed;
 	}
 
 	void moveRight() noexcept {
-		std::cout << "right" << std::endl;
+		//std::cout << "right" << std::endl;
 		position += delta * right * speed;
 	}
 
@@ -48,18 +48,18 @@ public:
 
 private:
 	//arbitrary values, better than garbage
-	glm::vec3 position{4, 3, 3};
-	glm::vec3 forward{0, 0, 0};
+	glm::vec3 position{0, 0, 5};
+	glm::vec3 forward{0, 0, -1};
 	glm::vec3 right{0, 1, 0};
 	float speed { 1.0f };
 	float mouseSens { 0.005f };
 	float fov { 45.0f };
-	float horizontalAngle { glm::pi<float>() };
-	float verticalAngle { 0.0f };
+	const float horizontalAngle { glm::pi<float>() };
+	const float verticalAngle { 0.0f };
 
 	GLFWwindow*& window;
 	int screenWidth{800};
-	int screenHeight{600};
+	int screenHeight{800};
 
 	glm::mat4 projection{glm::identity<glm::mat4>()};
 	glm::mat4 view{glm::identity<glm::mat4>()};
