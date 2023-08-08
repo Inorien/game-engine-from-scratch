@@ -45,29 +45,12 @@ void Graphics::initialise() {
 	glBindVertexArray(vertexArrayID);
 
 	shader = std::make_unique<Shader>(Shader::fromFile("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl"));
-	//programID = loadShaders("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl");
 
-	//matrixID = glGetUniformLocation(programID, "MVP");
+	//just some test data for now
+	const auto testTexture{ loadBMP("assets/bitmaps/triangle.bmp") };
+	testData.texture = testTexture;
+	renderQueue.emplace_back(testData);
 
-	//glGenBuffers(1, &vertexBufferID);
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	//glBufferData(
-	//	GL_ARRAY_BUFFER,
-	//	vertexBufferData.size() * sizeof(GLfloat),
-	//	vertexBufferData.data(),
-	//	GL_STATIC_DRAW);
-
-	//glGenBuffers(1, &colourBufferID);
-	//glBindBuffer(GL_ARRAY_BUFFER, colourBufferID);
-	//glBufferData(
-	//	GL_ARRAY_BUFFER,
-	//	uvData.size() * sizeof(GLfloat),
-	//	uvData.data(),
-	//	GL_STATIC_DRAW);
-
-	testData.texture = loadBMP("assets/bitmaps/triangle.bmp");
-	//textureID = glGetUniformLocation(programID, "texSampler");
-	//shader->
 
 	camera->update();
 }
@@ -80,45 +63,14 @@ void Graphics::render() const noexcept {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glUseProgram(programID);
+	//const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
 
-	const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
-	//const auto mvp{ glm::identity<glm::mat4>() };
+	for (const auto& renderData : renderQueue) {
+		shader->render(renderData);
+	}
 
-	shader->render(testData);
+	//shader->render(testData);
 
-	//glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, texture);
-	//glUniform1i(textureID, 0);
-
-	//glEnableVertexAttribArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	//glVertexAttribPointer(
-	//	0,
-	//	3,
-	//	GL_FLOAT,
-	//	GL_FALSE,
-	//	0,
-	//	nullptr
-	//);
-
-	//glEnableVertexAttribArray(1);
-	//glBindBuffer(GL_ARRAY_BUFFER, colourBufferID);
-	//glVertexAttribPointer(
-	//	1,
-	//	2,
-	//	GL_FLOAT,
-	//	GL_FALSE,
-	//	0,
-	//	nullptr
-	//);
-
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	//glDisableVertexAttribArray(0);
-	//glDisableVertexAttribArray(1);
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();

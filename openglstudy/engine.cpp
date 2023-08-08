@@ -26,6 +26,7 @@ void Engine::run() {
 
 
 		graphics.render();
+		//graphics.flushQueue();
 		lastTime = currentTime;
 	}
 }
