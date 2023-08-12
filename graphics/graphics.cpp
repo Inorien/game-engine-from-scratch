@@ -77,6 +77,8 @@ void Graphics::initialise() {
 		4,
 		1 };
 
+	//TODO not hardcode this and put it on the interface properly
+
 	const auto testTexture{ loadBMP("assets/bitmaps/triangle.bmp") };
 	testData.texture = testTexture;
 	testDataID = renderables.addRenderable(testData);
@@ -123,29 +125,4 @@ void Graphics::registerCallbackControl(CallbackControl* const control) const {
 			static_cast<CallbackControl*>(glfwGetWindowUserPointer(_window))->disableCallback(key);
 	};
 	glfwSetKeyCallback(window, func);
-}
-
-void Graphics::registerCameraCallbacks(CallbackControl* control) const {
-	//disgusting
-	//there must be a better way
-
-	static auto fwd = [this]() {
-		return camera->moveForward();
-	};
-	control->registerKeyCallback(GLFW_KEY_W, fwd);
-
-	static auto bck = [this]() {
-		return camera->moveBackward();
-	};
-	control->registerKeyCallback(GLFW_KEY_S, bck);
-
-	static auto lft = [this]() {
-		return camera->moveLeft();
-	};
-	control->registerKeyCallback(GLFW_KEY_A, lft);
-
-	static auto rgt = [this]() {
-		return camera->moveRight();
-	};
-	control->registerKeyCallback(GLFW_KEY_D, rgt);
 }
