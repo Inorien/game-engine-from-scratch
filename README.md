@@ -31,3 +31,4 @@ Improvements/bugfixes:
 -----
 - Fix camera bug (?) where mouse left/right is randomly inverted on startup
 - Improve marshalling of render data, reduce overhead
+- organise class methods into startup/runtime/shutdown sections
