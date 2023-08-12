@@ -10,6 +10,8 @@
 #include <sstream>
 #include <vector>
 
+class Camera;
+
 inline GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePath) {
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -111,6 +113,10 @@ public:
 
 	void render(const RenderData& renderData) const;
 
+	void setCamera(const std::shared_ptr<Camera>& camera) {
+		this->camera = camera;
+	}
+
 private:
 	
 
@@ -123,4 +129,6 @@ private:
 
 	GLuint vertexBuffer;
 	GLuint uvBuffer;
+
+	std::shared_ptr<Camera> camera;
 };

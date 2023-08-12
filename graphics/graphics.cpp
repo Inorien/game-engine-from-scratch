@@ -44,22 +44,23 @@ void Graphics::initialise() {
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
 
-	shader = std::make_unique<Shader>(Shader::fromFile("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl"));
+	shader = std::make_unique<Shader>(
+		Shader::fromFile("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl"));
 
 	//just some test data for now
 	const auto testTexture{ loadBMP("assets/bitmaps/triangle.bmp") };
 	testData.texture = testTexture;
 	renderQueue.emplace_back(testData);
 
-
 	camera->update();
+	shader->setCamera(camera);
 }
 
 
 void Graphics::render() const noexcept {
 
 	//can probably avoid this with mouse off, recalcs matrices that wont change
-	camera->update();
+	//camera->update();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -79,6 +80,7 @@ void Graphics::render() const noexcept {
 	}
 }
 
+//this should probably not be here, we only need the window pointer
 void Graphics::registerCallbackControl(CallbackControl* const control) const {
 	glfwSetWindowUserPointer(window, control);
 
@@ -91,7 +93,7 @@ void Graphics::registerCallbackControl(CallbackControl* const control) const {
 	glfwSetKeyCallback(window, func);
 }
 
-void Graphics::registerCameraCallbacks(CallbackControl* control) {
+void Graphics::registerCameraCallbacks(CallbackControl* control) const {
 	//disgusting
 	//there must be a better way
 

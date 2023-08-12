@@ -43,7 +43,7 @@ public:
 
 	//bad function, shouldnt be here but its convenient
 	//should be tidier once configs are added
-	void registerCameraCallbacks(CallbackControl* control);
+	void registerCameraCallbacks(CallbackControl* control) const;
 
 	void flushQueue() { renderQueue.clear(); }
 
@@ -55,10 +55,13 @@ private:
 	GLuint texture;
 	GLuint textureID;
 
-
-	std::unique_ptr<Camera> camera{nullptr};
+	//should this class still be owning camera?
+	std::shared_ptr<Camera> camera{nullptr};
 	std::unique_ptr<Shader> shader{nullptr};
 
+
+	//TODO: i want "non-temporary" stuff to just live on the card
+	// this queue is too simple but maybe ok for simple use
 	std::vector<RenderData> renderQueue;
 
 	RenderData testData{

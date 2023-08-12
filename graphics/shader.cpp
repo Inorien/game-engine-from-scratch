@@ -1,4 +1,6 @@
 #include "shader.h"
+#include "camera.h"
+
 
 Shader::~Shader() {
 	glDeleteProgram(programID);
@@ -97,7 +99,9 @@ void Shader::render(const RenderData& renderData) const {
 
 	glUseProgram(programID);
 
-	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &renderData.matrix[0][0]);
+	const auto mvp{ camera->getProjection() * camera->getView() * renderData.matrix };
+
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &mvp[0][0]);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, renderData.texture);
