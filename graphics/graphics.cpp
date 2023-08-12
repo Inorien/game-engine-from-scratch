@@ -48,9 +48,42 @@ void Graphics::initialise() {
 		Shader::fromFile("shaders/vertexshader.glsl", "shaders/fragmentshader.glsl"));
 
 	//just some test data for now
+
+	RenderData testData{
+	glm::identity<glm::mat4>(),
+	{-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f},
+	{0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f},
+	{0, 1, 2},
+	3,
+	0
+	};
+
+	RenderData playerData{
+		glm::identity<glm::mat4>(),
+		{0.0f, 1.0f, -0.1f,
+		.5f, 1.0f, -0.1f,
+		0.0f, 0.0f, -0.1f,
+		.5f, 0.0f, -0.1f},
+		{0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f},
+		{0, 1, 2,
+		1, 2, 3},
+		4,
+		1 };
+
 	const auto testTexture{ loadBMP("assets/bitmaps/triangle.bmp") };
 	testData.texture = testTexture;
-	renderQueue.emplace_back(testData);
+	testDataID = renderables.addRenderable(testData);
+
+	const auto heroTexture{ loadBMP("assets/bitmaps/hero.bmp") };
+	playerData.texture = heroTexture;
+	playerDataID = renderables.addRenderable(playerData);
 
 	camera->update();
 	shader->setCamera(camera);
@@ -66,11 +99,10 @@ void Graphics::render() const noexcept {
 
 	//const auto mvp{ camera->getProjection() * camera->getView() * glm::mat4(1.0) };
 
-	for (const auto& renderData : renderQueue) {
-		shader->render(renderData);
+	const auto& renderData{ renderables.getAllRenderData() };
+	for (const auto& data : renderData) {
+		shader->render(*data);
 	}
-
-	//shader->render(testData);
 
 
 	glfwSwapBuffers(window);

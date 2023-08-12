@@ -35,9 +35,11 @@ public:
 		return glfwWindowShouldClose(window);
 	}
 
-	void enqueue(RenderData&& renderData) {
-		renderQueue.emplace_back(std::move(renderData));
-	}
+	
+	//obsolete function, leaving it here for now
+	//void enqueue(RenderData&& renderData) {
+	//	renderQueue.emplace_back(std::move(renderData));
+	//}
 
 	void registerCallbackControl(CallbackControl* control) const;
 
@@ -45,7 +47,7 @@ public:
 	//should be tidier once configs are added
 	void registerCameraCallbacks(CallbackControl* control) const;
 
-	void flushQueue() { renderQueue.clear(); }
+	//void flushQueue() { renderQueue.clear(); }
 
 private:
 	GLFWwindow* window {nullptr};
@@ -59,22 +61,14 @@ private:
 	std::shared_ptr<Camera> camera{nullptr};
 	std::unique_ptr<Shader> shader{nullptr};
 
-
 	//TODO: i want "non-temporary" stuff to just live on the card
 	// this queue is too simple but maybe ok for simple use
-	std::vector<RenderData> renderQueue;
+	//std::vector<RenderData> renderQueue;
 
-	RenderData testData{
-		glm::identity<glm::mat4>(),
-		{-1.0f, -1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f},
-		{0.0f, 0.0f,
-			1.0f, 0.0f,
-			0.0f, 1.0f},
-		{0, 1, 2},
-		3,
-		0
-	};
+	Renderables renderables;
+
+	//dev testing
+	unsigned testDataID;
+	unsigned playerDataID;
 
 };
