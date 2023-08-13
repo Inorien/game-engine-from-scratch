@@ -1,5 +1,9 @@
 # Game Engine From Scratch in 2 weeks
 
+How to build:
+------
+Just throw it in Visual Studio and build the "openglstudy.exe" target
+
 Why:
 ----
 I like games and thought it would be a fun project to see if I could write one from nothing in two weeks.
@@ -32,3 +36,4 @@ Improvements/bugfixes:
 - Fix camera bug (?) where mouse left/right is randomly inverted on startup
 - Improve marshalling of render data, reduce overhead
 - organise class methods into startup/runtime/shutdown sections
+- Entities exist partially in separate subsystems, need to group them properly
